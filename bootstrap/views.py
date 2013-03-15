@@ -39,7 +39,7 @@ class ListView(BaseListView):
 
 class DetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
-        context = super(FormView, self).get_context_data(**kwargs)
+        context = super(DetailView, self).get_context_data(**kwargs)
 
         form_meta = self.get_form_class()._meta
         model_meta = form_meta.model._meta
