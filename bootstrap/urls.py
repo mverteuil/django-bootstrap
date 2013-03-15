@@ -41,7 +41,7 @@ def bootstrap_pattern(form, **kwargs):
         urls.append(bootstrap_delete(url_, view=view, name='%s_delete' % name))
 
     if 'details_view' not in kwargs or kwargs.get('details_view') is not None:
-        view = kwargs.get('details_view', DetailsView).as_view(model=model)
+        view = kwargs.get('details_view', DetailView).as_view(model=model)
         url_ = kwargs.get('details_view_url', r'^%s/(?P<pk>\d+)/details/$' % name)
         urls.append(bootstrap_delete(url_, view=view, name='%s_details' % name))
 
