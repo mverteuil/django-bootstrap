@@ -40,10 +40,10 @@ def bootstrap_pattern(form, **kwargs):
         url_ = kwargs.get('delete_view_url', r'^%s/(?P<pk>\d+)/delete/$' % name)
         urls.append(bootstrap_delete(url_, view=view, name='%s_delete' % name))
 
-    if 'details_view' not in kwargs or kwargs.get('details_view') is not None:
-        view = kwargs.get('details_view', DetailView).as_view(model=model)
-        url_ = kwargs.get('details_view_url', r'^%s/(?P<pk>\d+)/details/$' % name)
-        urls.append(bootstrap_delete(url_, view=view, name='%s_details' % name))
+    if 'detail_view' not in kwargs or kwargs.get('detail_view') is not None:
+        view = kwargs.get('detail_view', DetailView).as_view(model=model)
+        url_ = kwargs.get('detail_view_url', r'^%s/(?P<pk>\d+)/detail/$' % name)
+        urls.append(bootstrap_detail(url_, view=view, name='%s_detail' % name))
 
     return patterns('', *urls)
 
@@ -69,4 +69,10 @@ def bootstrap_update(url_, name, view=None, form=None):
 def bootstrap_delete(url_, name, view=None, model=None):
     if view is None:
         view = DeleteView.as_view(model=model)
+    return url(url_, view, name=name)
+
+
+def bootstrap_detail(url_, name, view=None, model=None):
+    if view is None:
+        view = DetailView.as_view(model=model)
     return url(url_, view, name=name)
