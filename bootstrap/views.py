@@ -2,7 +2,8 @@ from django.core.urlresolvers import reverse
 
 from django.contrib import messages
 
-from django.views.generic import ListView as BaseListView
+from django.views.generic import (ListView as BaseListView,
+                                  DetailView as BaseDetailView)
 
 from django.views.generic.edit import (FormView as BaseFormView,
                                        CreateView as BaseCreateView,
@@ -34,6 +35,45 @@ class ListView(BaseListView):
         name = model_meta.object_name.lower()
 
         return reverse('%s:%s_form' % (app_label, name))
+
+
+class DetailView(BaseDetailView):
+    def get_template_names(self):
+        templates = super(DetailView, self).get_template_names()
+        templates.append('bootstrap/detail.html')
+        return templates
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        model_meta = self.model._meta
+        context['name'] = self._get_name()
+        context['edit_object_url'] = self._get_edit_url()
+        context['delete_object_url'] = self._get_delete_url()
+        context['model_verbose_name'] = model_meta.verbose_name
+        context['model_verbose_name_plural'] = model_meta.verbose_name_plural
+
+        return context
+
+    def _get_name(self):
+        obj = self.get_object()
+        if hasattr(obj, "name"):
+            return obj.name
+        else:
+            return None
+
+    def _get_edit_url(self):
+        model_meta = self.model._meta
+        app_label = model_meta.app_label
+        name = model_meta.object_name.lower()
+        pk = self.kwargs.get('pk', None)
+        return reverse('%s:%s_form' % (app_label, name), args=(pk,))
+
+    def _get_delete_url(self):
+        model_meta = self.model._meta
+        app_label = model_meta.app_label
+        name = model_meta.object_name.lower()
+        pk = self.kwargs.get('pk', None)
+        return reverse('%s:%s_delete' % (app_label, name), args=(pk,))
 
 
 class FormView(BaseFormView):
@@ -105,12 +145,9 @@ class UpdateView(FormView, BaseUpdateView):
     def _get_delete_url(self):
         form_meta = self.get_form_class()._meta
         model_meta = form_meta.model._meta
-
         app_label = model_meta.app_label
         name = model_meta.object_name.lower()
-
         pk = self.kwargs.get('pk', None)
-
         return reverse('%s:%s_delete' % (app_label, name), args=(pk,))
 
 
