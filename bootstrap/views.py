@@ -22,6 +22,7 @@ class ListView(BaseListView):
 
         model_meta = self.model._meta
 
+        context['section'] = model_meta.verbose_name.lower()
         context['model_verbose_name'] = model_meta.verbose_name
         context['model_verbose_name_plural'] = model_meta.verbose_name_plural
 
@@ -43,6 +44,7 @@ class DetailView(BaseDetailView):
 
         model_meta = self.model._meta
 
+        context['section'] = model_meta.verbose_name.lower()
         context['model_verbose_name'] = model_meta.verbose_name
         context['model_verbose_name_plural'] = model_meta.verbose_name_plural
 
@@ -56,6 +58,7 @@ class FormView(BaseFormView):
         form_meta = self.get_form_class()._meta
         model_meta = form_meta.model._meta
 
+        context['section'] = model_meta.verbose_name.lower()
         context['model_verbose_name'] = model_meta.verbose_name
         context['model_verbose_name_plural'] = model_meta.verbose_name_plural
 
@@ -150,6 +153,7 @@ class DeleteView(BaseDeleteView):
 
         model_meta = self.model._meta
 
+        context['section'] = model_meta.verbose_name.lower()
         context['model_verbose_name'] = model_meta.verbose_name
         context['model_verbose_name_plural'] = model_meta.verbose_name_plural
 
