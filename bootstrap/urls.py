@@ -4,7 +4,7 @@ from .views import (ListView,
                     CreateView,
                     UpdateView,
                     DeleteView,
-                    DetailsView,)
+                    DetailView,)
 
 
 def bootstrap_patterns(*forms):
