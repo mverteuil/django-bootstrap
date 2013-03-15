@@ -3,7 +3,8 @@ from django.conf.urls.defaults import patterns, url
 from .views import (ListView,
                     CreateView,
                     UpdateView,
-                    DeleteView)
+                    DeleteView,
+                    DetailsView,)
 
 
 def bootstrap_patterns(*forms):
@@ -38,6 +39,11 @@ def bootstrap_pattern(form, **kwargs):
         view = kwargs.get('delete_view', DeleteView).as_view(model=model)
         url_ = kwargs.get('delete_view_url', r'^%s/(?P<pk>\d+)/delete/$' % name)
         urls.append(bootstrap_delete(url_, view=view, name='%s_delete' % name))
+
+    if 'details_view' not in kwargs or kwargs.get('details_view') is not None:
+        view = kwargs.get('details_view', DetailsView).as_view(model=model)
+        url_ = kwargs.get('details_view_url', r'^%s/(?P<pk>\d+)/details/$' % name)
+        urls.append(bootstrap_delete(url_, view=view, name='%s_details' % name))
 
     return patterns('', *urls)
 

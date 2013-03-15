@@ -2,7 +2,8 @@ from django.core.urlresolvers import reverse
 
 from django.contrib import messages
 
-from django.views.generic import ListView as BaseListView
+from django.views.generic import (ListView as BaseListView,
+                                  DetailView as BaseDetailView)
 
 from django.views.generic.edit import (FormView as BaseFormView,
                                        CreateView as BaseCreateView,
@@ -34,6 +35,21 @@ class ListView(BaseListView):
         name = model_meta.object_name.lower()
 
         return reverse('%s:%s_form' % (app_label, name))
+
+
+class DetailView(BaseDetailView):
+    def get_context_data(self, **kwargs):
+        context = super(FormView, self).get_context_data(**kwargs)
+
+        form_meta = self.get_form_class()._meta
+        model_meta = form_meta.model._meta
+
+        context['model_verbose_name'] = model_meta.verbose_name
+        context['model_verbose_name_plural'] = model_meta.verbose_name_plural
+
+        context['success_url'] = self.get_success_url()
+
+        return context
 
 
 class FormView(BaseFormView):
