@@ -41,13 +41,10 @@ class DetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)
 
-        form_meta = self.get_form_class()._meta
-        model_meta = form_meta.model._meta
+        model_meta = self.model._meta
 
         context['model_verbose_name'] = model_meta.verbose_name
         context['model_verbose_name_plural'] = model_meta.verbose_name_plural
-
-        context['success_url'] = self.get_success_url()
 
         return context
 
