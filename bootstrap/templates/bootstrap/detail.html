@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block button_bar %}
-<a href="{{ edit_object_url }}" class="btn primary">{% blocktrans with model_verbose_name|lower as object_name %}Edit {{ object_name }}{% endblocktrans %}</a>
-<a href="{{ delete_object_url }}" class="btn danger">{% blocktrans with model_verbose_name|lower as object_name %}Delete {{ object_name }}{% endblocktrans %}</a>
+<a href="{{ edit_object_url }}" class="btn btn-primary">{% blocktrans with model_verbose_name|lower as object_name %}Edit {{ object_name }}{% endblocktrans %}</a>
+<a href="{{ delete_object_url }}" class="btn btn-danger">{% blocktrans with model_verbose_name|lower as object_name %}Delete {{ object_name }}{% endblocktrans %}</a>
 {% endblock %}
 
 {% block content %}

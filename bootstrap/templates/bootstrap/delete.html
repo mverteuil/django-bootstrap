@@ -15,7 +15,7 @@
     <form action="" method="POST" onsubmit="return confirm('{% trans "Confirm?" %}');">
         {% csrf_token %}
         {% block actions %}
-        <button class="btn danger">{% trans "Yes, delete this!" %}</button>
+        <button class="btn btn-danger">{% trans "Yes, delete this!" %}</button>
         <a href="{{ object.get_absolute_url }}" class="btn">{% trans "Cancel" %}</a>
         {% endblock %}
     </form>

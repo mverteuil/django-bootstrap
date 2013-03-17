@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block button_bar %}
-    <a href="{{ add_object_url }}" class="btn primary">{% blocktrans with model_verbose_name|lower as object_name %}Add {{ object_name }}{% endblocktrans %}</a>
+    <a href="{{ add_object_url }}" class="btn btn-primary">{% blocktrans with model_verbose_name|lower as object_name %}Add {{ object_name }}{% endblocktrans %}</a>
 {% endblock %}
 
 {% block content %}
-    <table class="common-table zebra-striped"> 
+    <table class="table table-striped table-bordered"> 
         <thead> 
             {% block thead %}
             <tr>

@@ -8,6 +8,11 @@
     {% else %}
         {{ wizard.form.media }}
     {% endif %}
+    <style type="text/css">
+        .form-horizontal .control-group {
+            margin-bottom: 0px;
+        }
+    </style>
 {% endblock %}
 
 {% block messages %}
@@ -18,36 +23,36 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="POST">
-        {% block form %}
-            {% csrf_token %}
+<form class="form-horizontal" action="" method="POST">
+    {% block form %}
+        {% csrf_token %}
 
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
 
-            {% for field in form.visible_fields %}
-            <div class="clearfix{% if field.errors %} error{% endif %}"> 
-                {{ field.label_tag }}
-                <div class="input"> 
-                    {{ field }}
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                            <span class="help-inline">{{ error }}</span>
-                        {% endfor %}
-                    {% else %}
-                        <span class="help-inline">{{ field.help_text }}</span>
-                    {% endif %}
-                </div> 
-            </div><!-- /clearfix -->
-            {% endfor %}
-
-            <div class="actions">
-                {% block actions %}
-                <button type="submit" class="btn primary">{% trans "Save" %}</button>
-                <a href="{{ success_url }}" class="btn">{% trans "Cancel" %}</a>
-                {% endblock %}
+        {% for field in form.visible_fields %}
+        <div class="control-group{% if field.errors %} error{% endif %}"> 
+            {% if field.errors %}
+                {% for error in field.errors %}
+            <span class="help-inline">{{ error }}</span>
+                {% endfor %}
+            {% else %}
+            <label for="{{ field.name }}" class="control-label">{{ field.label }}</label>
+            <div class="controls">
+                {{ field }}
             </div>
-        {% endblock %}
-    </form>
+            <span class="help-inline">{{ field.help_text }}</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            {% block actions %}
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            <a href="{{ success_url }}" class="btn">{% trans "Cancel" %}</a>
+            {% endblock %}
+        </div>
+    {% endblock %}
+</form>
 {% endblock %}
